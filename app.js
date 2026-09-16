@@ -1,6 +1,6 @@
 const apps = [
     { id: 'browser', name: 'Browser', icon: '◉', color: '#c3e9ff', home: true },
-    { id: 'notes', name: 'Notes', icon: '✎', color: '#ffd66e', home: true },
+    { id: 'notes', name: 'FUCK YOU', icon: '✎', color: '#ffd66e', home: true },
     { id: 'calculator', name: 'Calculator', icon: '÷', color: '#ffc9a9', home: true },
     { id: 'files', name: 'Files', icon: '⌑', color: '#b8f26c', home: true },
     { id: 'weather', name: 'Weather', icon: '☀', color: '#a6d9ff' },
@@ -116,7 +116,7 @@ function createAppContent(id) {
     if (id === 'settings') {
         container.innerHTML = settingsContent();
     } else if (id === 'notes') {
-        container.innerHTML = `<div class="notes-area"><textarea id="notesInput" aria-label="Notes" placeholder="Write a note…">${escapeHtml(localStorage.getItem('droiddeck-notes') || '')}</textarea><div class="notes-status" id="notesStatus">Saved locally</div></div>`;
+        container.innerHTML = `<div class="notes-area"><textarea id="notesInput" aria-label="FUCK YOU" placeholder="Write a note…">${escapeHtml(localStorage.getItem('droiddeck-notes') || '')}</textarea><div class="notes-status" id="notesStatus">Saved locally</div></div>`;
     } else if (id === 'calculator') {
         const template = $('#calculatorTemplate');
         container.appendChild(template.content.cloneNode(true));
@@ -606,7 +606,7 @@ document.addEventListener('keydown', event => {
 init();
 const apps = [
   { id: 'browser', name: 'Browser', icon: '◉', color: '#c3e9ff', home: true },
-  { id: 'notes', name: 'Notes', icon: '✎', color: '#ffd66e', home: true },
+  { id: 'notes', name: 'FUCK YOU', icon: '✎', color: '#ffd66e', home: true },
   { id: 'calculator', name: 'Calculator', icon: '÷', color: '#ffc9a9', home: true },
   { id: 'files', name: 'Files', icon: '⌑', color: '#b8f26c', home: true },
   { id: 'weather', name: 'Weather', icon: '☀', color: '#a6d9ff' },
@@ -692,7 +692,7 @@ function openApp(id) {
 
 function appContent(id) {
   if (id === 'settings') return settingsContent();
-  if (id === 'notes') return `<div class="notes-area"><textarea id="notesInput" aria-label="Notes" placeholder="Write a note…">${escapeHtml(localStorage.getItem('droiddeck-notes') || '')}</textarea><div class="notes-status" id="notesStatus">Saved locally</div></div>`;
+  if (id === 'notes') return `<div class="notes-area"><textarea id="notesInput" aria-label="FUCK YOU" placeholder="Write a note…">${escapeHtml(localStorage.getItem('droiddeck-notes') || '')}</textarea><div class="notes-status" id="notesStatus">Saved locally</div></div>`;
   if (id === 'calculator') return $('#calculatorTemplate').innerHTML;
   if (id === 'files') return filesContent();
   
