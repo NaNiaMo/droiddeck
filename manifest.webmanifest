@@ -1,0 +1,18 @@
+{
+  "name": "DroidDeck HTML Simulator",
+  "short_name": "DroidDeck",
+  "description": "A touch-friendly Android interface simulation built with HTML.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#101316",
+  "theme_color": "#101316",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
