@@ -1,144 +1,245 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-  <meta name="theme-color" content="#101316">
-  <meta name="description" content="A touch-friendly Android interface simulator built entirely with HTML, CSS, and JavaScript.">
-  <title>DroidDeck — HTML Android Simulator</title>
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23101316'/%3E%3Cpath d='M18 25h28v20a7 7 0 0 1-7 7H25a7 7 0 0 1-7-7V25Z' fill='%23b8f26c'/%3E%3Cpath d='m22 20-4-7m24 7 4-7M20 23c2-8 22-8 24 0' fill='none' stroke='%23b8f26c' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='26' cy='32' r='2' fill='%23101316'/%3E%3Ccircle cx='38' cy='32' r='2' fill='%23101316'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DroidDeck — Advanced Android Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#080a0b">
 </head>
 <body>
-  <main class="stage">
-    <section class="info-panel" aria-label="Simulator information">
-      <div class="brand">
-        <span class="brand-mark" aria-hidden="true">D</span>
-        <span>DroidDeck</span>
-      </div>
-      <div class="info-copy">
-        <p class="eyebrow">HTML ANDROID SIMULATOR</p>
-        <h1>A pocket Android playground.</h1>
-        <p>Explore a simulated Android interface, open mock apps, change settings, and inspect APK file details—all inside your browser.</p>
-      </div>
-      <div class="feature-list">
-        <div><span>01</span><p><strong>Touch ready</strong><br>Built for phone, tablet, and desktop.</p></div>
-        <div><span>02</span><p><strong>Local only</strong><br>Your notes and preferences stay on this device.</p></div>
-        <div><span>03</span><p><strong>Simulation</strong><br>APK files are inspected, never executed.</p></div>
-      </div>
-      <p class="keyboard-hint">Keyboard: <kbd>H</kbd> home · <kbd>B</kbd> back · <kbd>A</kbd> apps</p>
-    </section>
-
-    <section class="device-wrap" aria-label="Simulated Android device">
-      <div class="device" id="device">
-        <div class="screen" id="screen">
-          <div class="wallpaper" aria-hidden="true"><span></span><span></span><span></span></div>
-
-          <header class="status-bar" id="statusBar">
-            <button class="time status-button" id="shadeButton" aria-label="Open notification shade">09:41</button>
-            <div class="status-icons" aria-label="Device status">
-              <span class="quiet" id="quietIcon" hidden>●</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0M5.5 12a10 10 0 0 1 13 0M9 15.5a5 5 0 0 1 6 0M12 19h.01"/></svg>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10m5 10V7m5 13V4m5 16V1"/></svg>
-              <span class="battery"><i></i></span>
+    <div class="stage">
+        <!-- Info Panel (Desktop Only) -->
+        <aside class="info-panel">
+            <div>
+                <div class="brand">
+                    <span class="brand-mark">D</span>
+                    <span>DroidDeck</span>
+                </div>
+                <p class="eyebrow">HTML ANDROID SIMULATOR</p>
+                <div class="info-copy">
+                    <h1>A pocket Android playground.</h1>
+                    <p>Explore a simulated Android interface, open mock apps, change settings, and inspect APK file details—all inside your browser.</p>
+                </div>
+                <div class="feature-list">
+                    <div>
+                        <span>01</span>
+                        <div>
+                            <strong>Touch ready</strong>
+                            <p>Built for phone, tablet, and desktop.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <span>02</span>
+                        <div>
+                            <strong>Local only</strong>
+                            <p>Your notes and preferences stay on this device.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <span>03</span>
+                        <div>
+                            <strong>Simulation</strong>
+                            <p>APK files are inspected, never executed.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </header>
+            <p class="keyboard-hint">Keyboard: <kbd>H</kbd> home · <kbd>B</kbd> back · <kbd>A</kbd> apps</p>
+        </aside>
 
-          <div class="view-stack" id="viewStack">
-            <section class="view home-view active" id="homeView" aria-label="Home screen">
-              <div class="home-content">
-                <button class="weather-widget" data-open-app="weather" aria-label="Open weather">
-                  <span class="weather-temp">21°</span>
-                  <span class="weather-meta">Clear<br><small>Victoria</small></span>
-                  <span class="weather-sun" aria-hidden="true">☀</span>
-                </button>
+        <!-- Device Container -->
+        <div class="device-wrap">
+            <div class="device">
+                <div class="screen" id="screen">
+                    <!-- Wallpaper Layer -->
+                    <div class="wallpaper" id="wallpaper">
+                        <span></span><span></span><span></span>
+                        <canvas id="particleCanvas"></canvas>
+                    </div>
 
-                <button class="search-pill" id="searchPill" aria-label="Open app search">
-                  <span class="g-dot">G</span><span>Search apps</span>
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a4 4 0 0 0-4 4v5a4 4 0 0 0 8 0V7a4 4 0 0 0-4-4Zm-7 9a7 7 0 0 0 14 0M12 19v3m-4 0h8"/></svg>
-                </button>
+                    <!-- Status Bar -->
+                    <div class="status-bar">
+                        <div class="status-left">
+                            <span class="time">09:41</span>
+                        </div>
+                        <div class="status-icons">
+                            <button class="status-button" id="shadeButton" aria-label="Notifications">
+                                <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7v3l-2 2v2h22v-2l-2-2V9a7 7 0 0 0-7-7Z"/><path d="M12 22a2 2 0 0 1-2-2h4a2 2 0 0 1-2 2Z"/></svg>
+                            </button>
+                            <span id="quietIcon" hidden class="quiet">◐</span>
+                            <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7v3l-2 2v2h22v-2l-2-2V9a7 7 0 0 0-7-7Z"/></svg>
+                            <div class="battery"><i></i></div>
+                        </div>
+                    </div>
 
-                <div class="home-apps app-grid" id="homeApps"></div>
-                <div class="page-dots"><span class="active"></span><span></span></div>
-              </div>
-            </section>
+                    <!-- View Stack -->
+                    <div class="view-stack">
+                        
+                        <!-- Home View -->
+                        <div class="view home-view active" id="homeView">
+                            <div class="home-content">
+                                <div class="weather-widget">
+                                    <div class="weather-temp">21°</div>
+                                    <div class="weather-meta">
+                                        <strong>Clear</strong><br>
+                                        <small>Victoria · H:23° L:18°</small>
+                                    </div>
+                                    <div class="weather-sun">☀</div>
+                                </div>
+                                
+                                <button class="search-pill" id="searchPill">
+                                    <span class="g-dot">G</span>
+                                    <span>Search apps...</span>
+                                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                                </button>
 
-            <section class="view drawer-view" id="drawerView" aria-label="All apps">
-              <div class="drawer-handle" aria-hidden="true"></div>
-              <div class="drawer-head">
-                <div class="drawer-title"><span>All apps</span><button id="closeDrawer" aria-label="Close app drawer">×</button></div>
-                <label class="drawer-search">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>
-                  <input id="appSearch" type="search" placeholder="Search apps" autocomplete="off">
-                </label>
-              </div>
-              <div class="app-grid drawer-grid" id="drawerApps"></div>
-            </section>
+                                <div class="home-apps" id="homeApps"></div>
+                                
+                                <div class="page-dots">
+                                    <span class="active"></span><span></span><span></span>
+                                </div>
+                            </div>
+                        </div>
 
-            <section class="view app-view" id="appView" aria-label="Open app">
-              <header class="app-header">
-                <button id="appBack" class="icon-button" aria-label="Go back">
-                  <svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg>
-                </button>
-                <div><p id="appKicker">APP</p><h2 id="appTitle">App</h2></div>
-                <button class="icon-button" id="appMenu" aria-label="App options">⋮</button>
-              </header>
-              <div class="app-body" id="appBody"></div>
-            </section>
+                        <!-- App Drawer -->
+                        <div class="view drawer-view" id="drawerView">
+                            <div class="drawer-handle"></div>
+                            <div class="drawer-title">
+                                <span>All apps</span>
+                                <button id="closeDrawer">×</button>
+                            </div>
+                            <div class="drawer-search">
+                                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                                <input type="text" id="appSearch" placeholder="Search apps..." autocomplete="off">
+                            </div>
+                            <div class="drawer-grid app-grid" id="drawerApps"></div>
+                        </div>
 
-            <section class="view overview-view" id="overviewView" aria-label="Recent apps">
-              <div class="overview-head"><span>Recent apps</span><button id="clearRecents">Clear all</button></div>
-              <div class="recent-card" id="recentCard">
-                <div class="recent-card-head"><span id="recentIcon">⚙</span><strong id="recentName">Settings</strong></div>
-                <div class="recent-preview"><span></span><span></span><span></span></div>
-              </div>
-              <p class="empty-recents" id="emptyRecents" hidden>No recent apps</p>
-            </section>
-          </div>
+                        <!-- Generic App View -->
+                        <div class="view app-view" id="appView">
+                            <div class="app-header">
+                                <button class="icon-button" id="appBack" aria-label="Back">
+                                    <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+                                </button>
+                                <div>
+                                    <p id="appKicker">APP</p>
+                                    <h2 id="appTitle">App Name</h2>
+                                </div>
+                                <button class="icon-button" id="appMenu" aria-label="Options">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                                </button>
+                            </div>
+                            <div class="app-body" id="appBody"></div>
+                        </div>
 
-          <section class="notification-shade" id="notificationShade" aria-label="Notification shade" aria-hidden="true">
-            <div class="shade-grabber"></div>
-            <div class="shade-top"><strong class="shade-time">09:41</strong><span id="shadeDate">Mon, Sep 16</span><button id="shadeSettings" aria-label="Open settings">⚙</button></div>
-            <div class="quick-settings" id="quickSettings">
-              <button class="quick active" data-setting="wifi"><span>⌁</span>Internet</button>
-              <button class="quick active" data-setting="bluetooth"><span>ᛒ</span>Bluetooth</button>
-              <button class="quick" data-setting="quiet"><span>◐</span>Do Not Disturb</button>
-              <button class="quick" data-setting="dark"><span>◑</span>Dark theme</button>
+                        <!-- Overview/Recents View -->
+                        <div class="view overview-view" id="overviewView">
+                            <div class="overview-head">
+                                <span>Recent apps</span>
+                                <button id="clearRecents">Clear all</button>
+                            </div>
+                            <div id="recentCard" class="recent-card" hidden>
+                                <div class="recent-card-head">
+                                    <span id="recentIcon">●</span>
+                                    <strong id="recentName">App</strong>
+                                </div>
+                                <div class="recent-preview">
+                                    <span style="width:60%"></span>
+                                    <span style="width:80%"></span>
+                                    <span style="width:40%"></span>
+                                </div>
+                            </div>
+                            <div id="emptyRecents" class="empty-recents">No recent apps</div>
+                        </div>
+
+                    </div>
+
+                    <!-- Notification Shade -->
+                    <div class="notification-shade" id="notificationShade" aria-hidden="true">
+                        <div class="shade-grabber"></div>
+                        <div class="shade-top">
+                            <div>
+                                <div class="shade-time">09:41</div>
+                                <span id="shadeDate">Mon, Sep 16</span>
+                            </div>
+                            <button id="shadeSettings" aria-label="Settings">⚙</button>
+                        </div>
+                        
+                        <div class="quick-settings" id="quickSettings">
+                            <button class="quick active" data-setting="wifi"><span>⌁</span>Internet</button>
+                            <button class="quick active" data-setting="bluetooth"><span>ᛒ</span>Bluetooth</button>
+                            <button class="quick" data-setting="quiet"><span>◐</span>Do Not Disturb</button>
+                            <button class="quick active" data-setting="dark"><span>◑</span>Dark theme</button>
+                        </div>
+
+                        <div class="brightness">
+                            <span>☀</span>
+                            <input type="range" id="brightness" min="20" max="100" value="100">
+                        </div>
+
+                        <div class="notifications">
+                            <p>Notifications</p>
+                            <article>
+                                <div class="notification-icon">✓</div>
+                                <div>
+                                    <strong>Welcome to DroidDeck</strong>
+                                    <p>Tap around—everything here is a safe HTML simulation.</p>
+                                    <small>now</small>
+                                </div>
+                            </article>
+                        </div>
+                        <button class="shade-close" id="shadeClose">Close</button>
+                    </div>
+
+                    <!-- Navigation Bar -->
+                    <div class="nav-bar">
+                        <button id="navBack" aria-label="Back"><div class="nav-back-shape"></div></button>
+                        <button id="navHome" aria-label="Home"><div class="nav-home-shape"></div></button>
+                        <button id="navOverview" aria-label="Overview"><div class="nav-overview-shape"></div></button>
+                    </div>
+
+                    <!-- Toast Notification -->
+                    <div class="toast" id="toast"></div>
+
+                </div>
             </div>
-            <label class="brightness"><span>☀</span><input id="brightness" type="range" min="55" max="115" value="100" aria-label="Brightness"></label>
-            <div class="notifications">
-              <p>Notifications</p>
-              <article><div class="notification-icon">✓</div><div><strong>Welcome to DroidDeck</strong><p>Tap around—everything here is a safe HTML simulation.</p><small>now</small></div></article>
-            </div>
-            <button class="shade-close" id="shadeClose">Close</button>
-          </section>
-
-          <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-          <nav class="nav-bar" aria-label="Android navigation">
-            <button id="navBack" aria-label="Back"><span class="nav-back-shape"></span></button>
-            <button id="navHome" aria-label="Home"><span class="nav-home-shape"></span></button>
-            <button id="navOverview" aria-label="Recent apps"><span class="nav-overview-shape"></span></button>
-          </nav>
         </div>
-      </div>
-    </section>
-  </main>
-
-  <template id="calculatorTemplate">
-    <div class="calculator">
-      <output id="calcDisplay">0</output>
-      <div class="calc-grid">
-        <button data-calc="clear" class="calc-action">AC</button><button data-calc="sign">±</button><button data-calc="percent">%</button><button data-calc="/" class="calc-op">÷</button>
-        <button data-calc="7">7</button><button data-calc="8">8</button><button data-calc="9">9</button><button data-calc="*" class="calc-op">×</button>
-        <button data-calc="4">4</button><button data-calc="5">5</button><button data-calc="6">6</button><button data-calc="-" class="calc-op">−</button>
-        <button data-calc="1">1</button><button data-calc="2">2</button><button data-calc="3">3</button><button data-calc="+" class="calc-op">+</button>
-        <button data-calc="0" class="calc-zero">0</button><button data-calc=".">.</button><button data-calc="=" class="calc-equals">=</button>
-      </div>
     </div>
-  </template>
 
-  <script src="app.js"></script>
+    <!-- Templates -->
+    <template id="calculatorTemplate">
+        <div class="calculator">
+            <output id="calcDisplay">0</output>
+            <div class="calc-grid">
+                <button data-calc="clear" class="calc-action">AC</button>
+                <button data-calc="sign" class="calc-action">±</button>
+                <button data-calc="percent" class="calc-action">%</button>
+                <button data-calc="/" class="calc-op">÷</button>
+                
+                <button data-calc="7">7</button>
+                <button data-calc="8">8</button>
+                <button data-calc="9">9</button>
+                <button data-calc="*" class="calc-op">×</button>
+                
+                <button data-calc="4">4</button>
+                <button data-calc="5">5</button>
+                <button data-calc="6">6</button>
+                <button data-calc="-" class="calc-op">−</button>
+                
+                <button data-calc="1">1</button>
+                <button data-calc="2">2</button>
+                <button data-calc="3">3</button>
+                <button data-calc="+" class="calc-op">+</button>
+                
+                <button data-calc="0" class="calc-zero">0</button>
+                <button data-calc=".">.</button>
+                <button data-calc="=" class="calc-equals">=</button>
+            </div>
+        </div>
+    </template>
+
+    <script src="app.js"></script>
 </body>
 </html>
